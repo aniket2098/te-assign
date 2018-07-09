@@ -8,7 +8,7 @@
 
 int main()
 {
-	int i,values[] = { 88, 56, 100, 2, 25 };
+  int i,values[5] = { 98, 56, 100, 2, 25 };
   pid_t cpid;
   char buf;
   cpid = fork();
@@ -19,9 +19,14 @@ int main()
   }
 
   if (cpid == 0) 
-  {   
-  		sleep(1);
-  		execv("./c",(char*)values);
+  {
+  	char* ptr;
+  	ptr=(char*)values;
+  	char** ptr1=&ptr;
+  	printf("%d",*(*ptr1+4));
+  	//char** ptr1=&ptr;
+  	sleep(1);
+  	execv("./c",ptr1);
   }
    else 
    {  
