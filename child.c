@@ -4,18 +4,30 @@
 #include <unistd.h>
 #include <string.h>
 
-int cmpfunc (const void * a, const void * b){
-   return ( *(int*)a - *(int*)b );
+int search(char* arr[],char key[])
+{
+	int i;
+	for(i=0;i<5;i++)
+	{
+		if(strcmp(arr[i],key)==0)
+			return 1;
+	}
+	return 0;
 }
 
 int main(int argc, char* argv[])
 {
+	int i;
+	char key[10];
 	printf("in child");
-	printf("%d",*(*argv+8));
-//	printf("%s",ptr);
- 	//printf("%d",getpid());
-  	//qsort((int*)argv[1], 5, sizeof(int), cmpfunc);
-  //for(i=0;i<5;i++)
-//  printf("%d\n",argv[1][i]);			
-  	//printf("%d",getppid());
+	for(i=0;i<5;i++)
+ 		printf("%s\n",argv[i]);	
+ 	printf("Enter no. to be searched:: ");
+ 	scanf("%s",key);
+ 	if(search(argv,key)==1)
+ 		printf("Found!\n");
+ 	else
+ 		printf("Not found!\n");
+
+
 }
