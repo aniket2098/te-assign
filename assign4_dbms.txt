@@ -1,0 +1,183 @@
+ create database order_system;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ABC                |
+| customer           |
+| demo               |
+| hospital           |
+| library            |
+| market             |
+| music_company      |
+| mysql              |
+| order_system       |
+| performance_schema |
+| piyush             |
+| railway            |
+| stocks             |
+| students           |
+| xyz                |
++--------------------+
+16 rows in set (0.00 sec)
+
+mysql> use order_system; 
+Database changed
+mysql>create table customer(cust_id int,cust_name varchar(20),phone varchar(10));
+Query OK, 0 rows affected (0.05 sec)
+desc customer;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| cust_id   | int(11)     | YES  |     | NULL    |       |
+| cust_name | varchar(20) | YES  |     | NULL    |       |
+| phone     | varchar(10) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table books(book_id int primary key,book_name varchar(20),author varchar(20),price int,quantity int);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc books;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| book_id   | int(11)     | NO   | PRI | NULL    |       |
+| book_name | varchar(20) | YES  |     | NULL    |       |
+| author    | varchar(20) | YES  |     | NULL    |       |
+| price     | int(11)     | YES  |     | NULL    |       |
+| quantity  | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql>create table orders(order_id int primary key,date varchar(10),total int,payment int,cust_id int references books.cust_id);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc orders;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| order_id | int(11)     | NO   | PRI | NULL    |       |
+| date     | varchar(10) | YES  |     | NULL    |       |
+| total    | int(11)     | YES  |     | NULL    |       |
+| payment  | int(11)     | YES  |     | NULL    |       |
+| cust_id  | int(11)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table orderItem(order_id int references orders.order_id,quantity int,amount int,book_id int references books.book_id);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc orderItem;
++----------+---------+------+-----+---------+-------+
+| Field    | Type    | Null | Key | Default | Extra |
++----------+---------+------+-----+---------+-------+
+| order_id | int(11) | YES  |     | NULL    |       |
+| quantity | int(11) | YES  |     | NULL    |       |
+| amount   | int(11) | YES  |     | NULL    |       |
+| book_id  | int(11) | YES  |     | NULL    |       |
++----------+---------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> show tables;
++------------------------+
+| Tables_in_order_system |
++------------------------+
+| books                  |
+| customer               |
+| orderItem              |
+| orders                 |
++------------------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer add primary key(cust_id);
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| cust_id   | int(11)     | NO   | PRI | 0       |       |
+| cust_name | varchar(20) | YES  |     | NULL    |       |
+| phone     | varchar(10) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table customer add cust_address varchar(30);
+Query OK, 0 rows affected (0.14 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| cust_id      | int(11)     | NO   | PRI | 0       |       |
+| cust_name    | varchar(20) | YES  |     | NULL    |       |
+| phone        | varchar(10) | YES  |     | NULL    |       |
+| cust_address | varchar(30) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table orders modify total tinyint;
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc orders;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| order_id | int(11)     | NO   | PRI | NULL    |       |
+| date     | varchar(10) | YES  |     | NULL    |       |
+| total    | tinyint(4)  | YES  |     | NULL    |       |
+| payment  | int(11)     | YES  |     | NULL    |       |
+| cust_id  | int(11)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table customer rename customers;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++------------------------+
+| Tables_in_order_system |
++------------------------+
+| books                  |
+| customers              |
+| orderItem              |
+| orders                 |
++------------------------+
+4 rows in set (0.00 sec)
+
+mysql> create table categories(cat_id int primary key,cat_name varchar(10));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc categories;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cat_id   | int(11)     | NO   | PRI | NULL    |       |
+| cat_name | varchar(10) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table books add foreign key (cat_id) references categories(cat_id);  
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc books;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| book_id   | int(11)     | NO   | PRI | NULL    |       |
+| book_name | varchar(20) | YES  |     | NULL    |       |
+| author    | varchar(20) | YES  |     | NULL    |       |
+| price     | int(11)     | YES  |     | NULL    |       |
+| quantity  | int(11)     | YES  |     | NULL    |       |
+| cat_id    | int(11)     | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
