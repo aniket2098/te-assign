@@ -13,9 +13,16 @@ int main(){
 int res,i;
 pthread_t a_thread;
 void *thread_result;
-int a[10][10],i,j,r1,c1,r2,c2;
+int a[10][10],b[10][10],i,j,r1,c1,r2,c2;
 printf("Enter no. of rows: ",&r1);
-printf("Enter no. of rows: ",&c1);
+scanf("%d",&r1);
+printf("Enter no. of columns: ",&c1);
+scanf("%d",&c1);
+printf("Enter no. of rows: ",&r2);
+scanf("%d",&r2);
+printf("Enter no. of columns: ",&c2);
+scanf("%d",&c2);
+printf("Enter matrix 1:");
 for(i=0;i<r1;i++)
 {
 	for(j=0;j<c1;j++)
@@ -23,7 +30,15 @@ for(i=0;i<r1;i++)
 		scanf("%d",&a[i][j]);
 	}
 }
+printf("Enter matrix 2:");
 
+for(i=0;i<r2;i++)
+{
+	for(j=0;j<c2;j++)
+	{
+		scanf("%d",&b[i][j]);
+	}
+}
 res = pthread_create(&a_thread, NULL, thread_function,(void*)a);
 if (res != 0) {
 perror("Thread creation failed");
