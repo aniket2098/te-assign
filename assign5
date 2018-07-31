@@ -1,0 +1,64 @@
+mysql> select orders.order_id,date,amount from orders,orderItem where cust_id=2 and orders.order_id=orderItem.order_id;
++----------+---------+--------+
+| order_id | date    | amount |
++----------+---------+--------+
+|        2 | 26-7-18 |    300 |
+|        2 | 26-7-18 |    200 |
+|        2 | 26-7-18 |    100 |
+|        2 | 26-7-18 |     90 |
+|        4 | 26-7-18 |     50 |
+|        5 | 26-7-18 |    150 |
++----------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select orderItem.order_id,books.book_id,book_name,orderItem.quantity,amount from orders,orderItem,books where books.book_id =orderItem.book_id and orders.order_id=orderItem.order_id and cust_id=2 and orders.order_id=2;
++----------+---------+-------------------+----------+--------+
+| order_id | book_id | book_name         | quantity | amount |
++----------+---------+-------------------+----------+--------+
+|        2 |       4 | Origin            |        1 |    300 |
+|        2 |       1 | Angels and Demons |        1 |    200 |
+|        2 |       2 | Deception Point   |        1 |    100 |
+|        2 |       3 | Digital Fortress  |        1 |     90 |
++----------+---------+-------------------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select customers.cust_id,cust_name,books.book_id,book_name,orderItem.quantity,amount from orders,orderItem,books,customers where books.book_id =orderItem.book_id and orders.order_id=orderItem.order_id and customers.cust_id=orders.cust_id and orders.order_id=2;
++---------+-----------+---------+-------------------+----------+--------+
+| cust_id | cust_name | book_id | book_name         | quantity | amount |
++---------+-----------+---------+-------------------+----------+--------+
+|       2 | rutuja    |       4 | Origin            |        1 |    300 |
+|       2 | rutuja    |       1 | Angels and Demons |        1 |    200 |
+|       2 | rutuja    |       2 | Deception Point   |        1 |    100 |
+|       2 | rutuja    |       3 | Digital Fortress  |        1 |     90 |
++---------+-----------+---------+-------------------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select sum(payment) from orders;
++--------------+
+| sum(payment) |
++--------------+
+|        12190 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select * from orders order by payment desc;
++----------+---------+-------+---------+---------+
+| order_id | date    | total | payment | cust_id |
++----------+---------+-------+---------+---------+
+|        1 | 26-7-18 |  8000 |    8000 |       1 |
+|        5 | 26-7-18 |  1500 |    1500 |       2 |
+|        3 | 26-7-18 |  1000 |    1000 |       3 |
+|        4 | 26-7-18 |  1000 |    1000 |       2 |
+|        2 | 26-7-18 |   690 |     690 |       2 |
++----------+---------+-------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customers where cust_name like "sa%";
++---------+-----------+-------+--------------+
+| cust_id | cust_name | phone | cust_address |
++---------+-----------+-------+--------------+
+|       3 | saksham   | 2344  | pict         |
+|       4 | sakshi    | 45555 | pict         |
++---------+-----------+-------+--------------+
+2 rows in set (0.00 sec)
+
