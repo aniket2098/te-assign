@@ -1,0 +1,35 @@
+
+mysql> select * from orderItem where book_id not in (select book_id from books where cat_id=1);
++----------+----------+--------+---------+
+| order_id | quantity | amount | book_id |
++----------+----------+--------+---------+
+|        1 |       20 |   4750 |       8 |
+|        5 |        1 |    250 |       8 |
++----------+----------+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select book_name,quantity from books where quantity in (select quantity from books where quantity=10 or quantity=50);
++-----------------+----------+
+| book_name       | quantity |
++-----------------+----------+
+| Deception Point |       10 |
+| Origin          |       50 |
++-----------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from books where price > (select price from books where book_name="Origin");
++---------+----------------------+-----------------+-------+----------+--------+
+| book_id | book_name            | author          | price | quantity | cat_id |
++---------+----------------------+-----------------+-------+----------+--------+
+|       9 | Theory of Everything | Stephen Hawking |   350 |       45 |      3 |
++---------+----------------------+-----------------+-------+----------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from orders where total >= (select max(total) from orders);
++----------+------------+-------+---------+---------+
+| order_id | date       | total | payment | cust_id |
++----------+------------+-------+---------+---------+
+|        1 | 2026-07-18 |  7600 |    7600 |       1 |
++----------+------------+-------+---------+---------+
+1 row in set (0.02 sec)
+	
